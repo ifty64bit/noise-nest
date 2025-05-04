@@ -41,13 +41,26 @@ import "../styles/global.css";
                 />
             </div>
             <div class="flex flex-col items-center gap-2">
+                <label for="frog-slider"
+                    ><img src="/assets/icons/frog.png" /></label
+                >
+                <input
+                    type="range"
+                    id="frog-slider"
+                    min="0"
+                    max="100"
+                    value="50"
+                    class="w-full"
+                />
+            </div>
+            <div class="flex flex-col items-center gap-2">
                 <button id="power" class="active:scale-95"
                     ><img
                         src="/assets/icons/power-on.png"
                         class="shadow-lg rounded-full p-1"
                     /></button
                 >
-                <label for="power">Power On</label>
+                <label for="power">Power</label>
             </div>
         </main>
     </body>
