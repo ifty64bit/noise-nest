@@ -1,62 +1,54 @@
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 
-/* =============== Declare Event Listeners =============== */
-const rainSlider = document.querySelector("#rain-slider") as HTMLInputElement;
-const forestBirdSlider = document.querySelector(
-    "#forest-bird-slider"
-) as HTMLInputElement;
-const frogSlider = document.querySelector("#frog-slider") as HTMLInputElement;
-const powerButton = document.querySelector("#power") as HTMLButtonElement;
+const soundConfigs = [
+    { id: "rain", src: ["/assets/sounds/heavy-rain-drops.wav"] },
+    { id: "forest-bird", src: ["/assets/sounds/forest-bird.wav"] },
+    { id: "frog", src: ["/assets/sounds/frog.mp3"] },
+    {
+        id: "campfire",
+        src: ["/assets/sounds/campfire.mp3"],
+    },
+    {
+        id: "wolf",
+        src: ["/assets/sounds/wolf-howling-1.mp3"],
+    },
+];
 
-const effects = {
-    rain: new Howl({
-        src: ["/assets/sounds/heavy-rain-drops.wav"],
+const effects: Record<string, Howl> = {};
+
+soundConfigs.forEach(({ id, src }) => {
+    effects[id] = new Howl({
+        src: [...src],
         loop: true,
-    }),
-    forestBird: new Howl({
-        src: ["/assets/sounds/forest-bird.wav"],
-        loop: true,
-    }),
-    frog: new Howl({
-        src: ["/assets/sounds/frog.mp3"],
-        loop: true,
-    }),
-};
-
-function handleRainChange(e: Event) {
-    const value = (e.target as HTMLInputElement).value;
-    effects.rain.volume(Number(value) / 100);
-}
-
-function handleForestBirdChange(e: Event) {
-    const value = (e.target as HTMLInputElement).value;
-    effects.forestBird.volume(Number(value) / 100);
-}
-
-function handleFrogChange(e: Event) {
-    const value = (e.target as HTMLInputElement).value;
-    effects.frog.volume(Number(value) / 100);
-}
-
-rainSlider.addEventListener("input", (e) => {
-    handleRainChange(e);
-});
-
-forestBirdSlider.addEventListener("input", (e) => {
-    handleForestBirdChange(e);
-});
-
-frogSlider.addEventListener("input", (e) => {
-    handleFrogChange(e);
-});
-
-powerButton.addEventListener("click", () => {
-    Object.values(effects).forEach((effect) => {
-        if (effect.playing()) {
-            effect.stop();
-        } else {
-            effect.play();
-        }
+        html5: true,
     });
-    powerButton.classList.toggle("active");
+
+    const slider = document.querySelector(
+        `#${id}-slider`
+    ) as HTMLInputElement | null;
+    if (slider) {
+        slider.addEventListener("input", (e) => {
+            const value = (e.target as HTMLInputElement).value;
+            effects[id].volume(Number(value) / 100);
+        });
+    }
 });
+
+const powerButton = document.querySelector(
+    "#power"
+) as HTMLButtonElement | null;
+if (powerButton) {
+    powerButton.addEventListener("click", () => {
+        const anyPlaying = Object.values(effects).some((effect) =>
+            effect.playing()
+        );
+        Object.values(effects).forEach((effect) => {
+            if (anyPlaying) {
+                effect.stop();
+            } else {
+                effect.play();
+            }
+        });
+        powerButton.classList.toggle("active", !anyPlaying);
+    });
+}
