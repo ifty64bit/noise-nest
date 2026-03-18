@@ -1,0 +1,165 @@
+/* ========================================================================
+   Noise Nest — Global Design System
+   ======================================================================== */
+
+/* --- Design Tokens --- */
+:root {
+	/* Colors */
+	--color-bg-primary: hsl(220, 25%, 6%);
+	--color-bg-secondary: hsl(220, 20%, 10%);
+	--color-bg-card: hsla(220, 20%, 14%, 0.6);
+	--color-bg-card-hover: hsla(220, 20%, 18%, 0.7);
+	--color-bg-card-active: hsla(170, 30%, 12%, 0.5);
+
+	--color-text-primary: hsl(0, 0%, 94%);
+	--color-text-secondary: hsl(220, 10%, 60%);
+	--color-text-muted: hsl(220, 10%, 40%);
+
+	--color-accent: hsl(170, 80%, 55%);
+	--color-accent-dim: hsl(170, 60%, 30%);
+	--color-accent-glow: hsla(170, 80%, 55%, 0.35);
+
+	--color-glass-border: hsla(0, 0%, 100%, 0.08);
+	--color-glass-border-hover: hsla(0, 0%, 100%, 0.14);
+
+	/* Slider track */
+	--color-slider-track: hsla(0, 0%, 100%, 0.08);
+	--color-slider-fill: var(--color-accent);
+	--color-slider-thumb: var(--color-accent);
+
+	/* Spacing */
+	--space-xs: 0.25rem;
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 1.5rem;
+	--space-xl: 2rem;
+	--space-2xl: 3rem;
+
+	/* Radii */
+	--radius-sm: 0.5rem;
+	--radius-md: 0.75rem;
+	--radius-lg: 1rem;
+	--radius-xl: 1.25rem;
+	--radius-full: 50%;
+
+	/* Shadows */
+	--shadow-card: 0 4px 24px hsla(0, 0%, 0%, 0.3);
+	--shadow-glow: 0 0 20px var(--color-accent-glow);
+
+	/* Transitions */
+	--transition-fast: 150ms ease;
+	--transition-base: 250ms ease;
+	--transition-slow: 400ms ease;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--color-text-primary);
+	background-color: var(--color-bg-primary);
+	min-height: 100dvh;
+	overflow-x: hidden;
+}
+
+/* --- Utility Classes --- */
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+}
+
+/* --- Range Slider Styles --- */
+input[type='range'] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 6px;
+	background: transparent;
+	cursor: pointer;
+	outline: none;
+}
+
+/* Track — WebKit */
+input[type='range']::-webkit-slider-runnable-track {
+	height: 6px;
+	border-radius: 3px;
+	background: var(--color-slider-track);
+}
+
+/* Track — Firefox */
+input[type='range']::-moz-range-track {
+	height: 6px;
+	border-radius: 3px;
+	background: var(--color-slider-track);
+	border: none;
+}
+
+/* Firefox fill */
+input[type='range']::-moz-range-progress {
+	height: 6px;
+	border-radius: 3px;
+	background: var(--color-slider-fill);
+}
+
+/* Thumb — WebKit */
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: var(--radius-full);
+	background: var(--color-slider-thumb);
+	border: 2px solid var(--color-bg-primary);
+	margin-top: -5px;
+	box-shadow: 0 0 8px var(--color-accent-glow);
+	transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+	transform: scale(1.2);
+	box-shadow: 0 0 14px var(--color-accent-glow);
+}
+
+/* Thumb — Firefox */
+input[type='range']::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: var(--radius-full);
+	background: var(--color-slider-thumb);
+	border: 2px solid var(--color-bg-primary);
+	box-shadow: 0 0 8px var(--color-accent-glow);
+	transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input[type='range']::-moz-range-thumb:hover {
+	transform: scale(1.2);
+	box-shadow: 0 0 14px var(--color-accent-glow);
+}
+
+input[type='range']:focus-visible::-webkit-slider-thumb {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+input[type='range']:focus-visible::-moz-range-thumb {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
